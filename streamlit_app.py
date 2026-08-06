@@ -39,4 +39,4 @@ if ingredients_list and name_on_order:
 
 import requests  
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-st.write(smoothiefroot_response.text)
+st.text(smoothiefroot_response)
