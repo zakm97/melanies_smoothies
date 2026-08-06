@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 from snowflake.snowpark.functions import col
 
 st.title(":cup_with_straw: Customize Your Smoothie :cup_with_straw:")
