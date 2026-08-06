@@ -5,7 +5,6 @@ from snowflake.snowpark.functions import col
 st.title(":cup_with_straw: Customize Your Smoothie :cup_with_straw:")
 st.write("Choose the fruits you want in custom Smoothie!")
 
-
 cnx = st.connection("snowflake")
 session = cnx.session()
 
@@ -28,22 +27,17 @@ ingredients_list = st.multiselect(
 
 if ingredients_list:
     ingredients_string = " ".join(ingredients_list)
-
     st.write("Your selected ingredients:", ingredients_string)
 
     for fruit_chosen in ingredients_list:
-            fruit_url = fruit_chosen.lower()
-            smoothiefroot_response = requests.get(
-                f"https://my.smoothiefroot.com/api/fruit/{fruit_url}"
-            )
-    st.json(smoothiefroot_response.json())
+        fruit_url = fruit_chosen.lower()
+        smoothiefroot_response = requests.get(
+            f"https://my.smoothiefroot.com/api/fruit/{fruit_url}"
+        )
 
         st.subheader(fruit_chosen)
-        st.dataframe(
-            smoothiefroot_response.json(),
-            use_container_width=True
-        )
-    
+        st.json(smoothiefroot_response.json())
+
     if st.button("Submit Order"):
         my_insert_stmt = f"""
             INSERT INTO SMOOTHIES.PUBLIC.ORDERS (INGREDIENTS, NAME_ON_ORDER)
@@ -51,4 +45,3 @@ if ingredients_list:
         """
         session.sql(my_insert_stmt).collect()
         st.success("Your Smoothie is ordered!", icon=":material/thumb_up:")
-
